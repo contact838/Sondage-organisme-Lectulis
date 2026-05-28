@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sondage Littéraire — Lectulis.fr</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink: #1c1f26;
+  --ink-soft: #3a3f4d;
+  --muted: #7a8290;
+  --accent: #6992c7;
+  --accent-dark: #3d5a8a;
+  --accent-light: #e8f0fb;
+  --gold: #c4a265;
+  --gold-light: #f7f0e6;
+  --paper: #faf8f5;
+  --paper-warm: #f3ede4;
+  --white: #ffffff;
+  --green: #3d7a5e;
+  --green-light: #e8f4ee;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(28,31,38,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 5vw 60px;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* Grille décorative */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(196,162,101,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,162,101,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Cercle lumineux */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(105,146,199,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-left { }
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(196,162,101,0.12);
+  border: 1px solid rgba(196,162,101,0.25);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.75;
+  margin-bottom: 40px;
+  max-width: 460px;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+.hero-stat {}
+.hero-stat .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hero-stat .lbl {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.4;
+}
+.hero-stat-sep {
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+  align-self: stretch;
+}
+
+/* Carte droite du hero */
+.hero-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  animation: fadeUp 0.6s 0.2s ease both;
+  backdrop-filter: blur(8px);
+}
+
+.hero-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--white);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.org-types {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.org-type {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.75);
+  transition: all 0.2s;
+}
+
+.org-type:hover {
+  background: rgba(105,146,199,0.12);
+  border-color: rgba(105,146,199,0.3);
+  color: var(--white);
+}
+
+.org-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 15px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s;
+  letter-spacing: 0.02em;
+  width: 100%;
+  justify-content: center;
+}
+
+.hero-cta:hover {
+  background: #d4b275;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(196,162,101,0.3);
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.3);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: fadeUp 1s 0.8s ease both;
+  z-index: 1;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(rgba(255,255,255,0.3), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* ── SECTION POURQUOI ── */
+.why-section {
+  padding: 100px 5vw;
+  background: var(--white);
+}
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  max-width: 640px;
+}
+
+.section-sub {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 56px;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.why-card {
+  padding: 32px 28px;
+  border: 1px solid rgba(28,31,38,0.08);
+  border-radius: var(--radius);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.why-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.why-card:hover::before { transform: scaleX(1); }
+
+.why-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.why-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.why-card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── SECTION CE QUE VOUS OBTENEZ ── */
+.value-section {
+  padding: 100px 5vw;
+  background: var(--paper);
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.value-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.value-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid rgba(28,31,38,0.06);
+  transition: all 0.2s;
+}
+
+.value-item:hover {
+  border-color: rgba(105,146,199,0.3);
+  box-shadow: var(--shadow);
+}
+
+.value-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 36px;
+}
+
+.value-item h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.value-item p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.value-visual {
+  background: var(--ink);
+  border-radius: var(--radius);
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.value-visual::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(196,162,101,0.12) 0%, transparent 70%);
+}
+
+.visual-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  color: rgba(196,162,101,0.2);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.visual-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.5;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.visual-modules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.visual-mod {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+}
+
+.mod-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid rgba(28,31,38,0.07);
+  padding: 10px 5vw;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(28,31,38,0.05);
+}
+
+.progress-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  min-width: 90px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: var(--accent-light);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+.progress-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* ── FORM SECTION ── */
+.form-section {
+  padding: 80px 5vw 100px;
+  background: var(--paper-warm);
+}
+
+.form-section .section-inner {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.form-sidebar {
+  position: sticky;
+  top: 80px;
+}
+
+.sidebar-badge {
+  display: inline-block;
+  background: var(--gold-light);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(196,162,101,0.2);
+}
+
+.form-sidebar h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.form-sidebar p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+
+.sidebar-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.sidebar-meta-item span:first-child {
+  width: 28px; height: 28px;
+  background: var(--white);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(28,31,38,0.08);
+}
+
+/* ── FORM ── */
+.form-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.form-block {
+  padding: 36px 40px;
+  border-bottom: 1px solid rgba(28,31,38,0.06);
+}
+
+.form-block:last-child { border-bottom: none; }
+
+.block-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.block-num {
+  width: 32px; height: 32px;
+  background: var(--ink);
+  color: var(--white);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.block-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.block-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+/* Questions */
+.question { margin-bottom: 24px; }
+.question:last-child { margin-bottom: 0; }
+
+.q-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.45;
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+}
+
+.q-req { color: var(--accent); font-size: 11px; }
+.q-hint { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 10px; }
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+textarea,
+select {
+  width: 100%;
+  background: var(--paper);
+  border: 1.5px solid rgba(28,31,38,0.1);
+  border-radius: 9px;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  color: var(--ink);
+  transition: all 0.2s;
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(105,146,199,0.1);
+}
+
+input::placeholder, textarea::placeholder { color: var(--muted); }
+textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+select {
+  cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%237a8290' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Options */
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.opts-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+.opt { position: relative; cursor: pointer; }
+.opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.opt-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 12px 15px;
+  background: var(--paper);
+  border: 1.5px solid rgba(28,31,38,0.09);
+  border-radius: 9px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.opt-label:hover { border-color: var(--accent); background: var(--accent-light); }
+
+.opt input:checked + .opt-label {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+.opt-box {
+  width: 17px; height: 17px;
+  border: 2px solid rgba(28,31,38,0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.18s;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.opt input[type="checkbox"] + .opt-label .opt-box { border-radius: 4px; }
+
+.opt input:checked + .opt-label .opt-box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.opt input:checked + .opt-label .opt-box::after {
+  content: '';
+  width: 5px; height: 5px;
+  background: white;
+  border-radius: 50%;
+  display: block;
+}
+
+.opt input[type="checkbox"]:checked + .opt-label .opt-box::after {
+  width: 9px; height: 6px;
+  border-radius: 0;
+  background: none;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+/* Échelle */
+.scale-row { display: flex; gap: 6px; }
+.scale-lbs { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+.sc { position: relative; flex: 1; }
+.sc input { position: absolute; opacity: 0; width: 0; height: 0; }
+.sc-num {
+  display: flex; align-items: center; justify-content: center;
+  height: 42px;
+  border: 1.5px solid rgba(28,31,38,0.1);
+  border-radius: 8px;
+  font-size: 14px; font-weight: 600;
+  color: var(--muted);
+  background: var(--paper);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.sc-num:hover { border-color: var(--accent); color: var(--accent); }
+.sc input:checked + .sc-num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Info box */
+.ibox {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.ibox strong { color: var(--accent-dark); }
+.ibox.gold { background: var(--gold-light); border-left-color: var(--gold); }
+.ibox.gold strong { color: var(--gold); }
+
+/* Submit */
+.form-submit {
+  padding: 36px 40px;
+  background: var(--ink);
+  text-align: center;
+}
+
+.form-submit h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.form-submit p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.btn-submit {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  padding: 15px 44px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.02em;
+}
+
+.btn-submit:hover {
+  background: #d4b275;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(196,162,101,0.3);
+}
+
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.trust-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.trust-item { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+/* Success */
+.success-screen {
+  display: none;
+  max-width: 560px;
+  margin: 80px auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 80px; height: 80px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px;
+  margin: 0 auto 24px;
+}
+
+.success-screen h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.success-screen p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+/* Footer */
+footer {
+  background: var(--ink);
+  padding: 28px 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.footer-brand span { color: var(--gold); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .why-grid { grid-template-columns: 1fr; }
+  .value-grid { grid-template-columns: 1fr; }
+  .form-section .section-inner { grid-template-columns: 1fr; }
+  .form-sidebar { position: static; }
+  .opts-grid, .opts-grid3 { grid-template-columns: 1fr; }
+  .input-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .hero { padding: 60px 5vw 50px; min-height: auto; }
+  .hero-stats { gap: 20px; }
+  .form-block { padding: 28px 24px; }
+  .form-submit { padding: 28px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag">📋 Sondage Littéraire — 2026</div>
+      <h1>Vos membres<br>veulent-ils<br><em>apprendre à écrire ?</em></h1>
+      <p class="hero-desc">
+        Lectulis.fr mène un Sondage Littéraire auprès des structures francophones 
+        et associatifs francophones pour évaluer l'intérêt d'un programme 
+        de formation littéraire en visioconférence.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">8 min</div>
+          <div class="lbl">pour répondre<br>au sondage</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat">
+          <div class="num">100%</div>
+          <div class="lbl">gratuit et sans<br>engagement</div>
+        </div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat">
+          <div class="num">138</div>
+          <div class="lbl">pays couverts<br>par notre réseau</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-card-title">Vous êtes concerné(e) si…</div>
+      <div class="org-types">
+        <div class="org-type"><div class="org-dot"></div>Vous rassemblez des francophones autour de la culture</div>
+        <div class="org-type"><div class="org-dot"></div>Vous gérez une communauté d'apprenants ou de lecteurs</div>
+        <div class="org-type"><div class="org-dot"></div>Vos membres ont des projets d'écriture non accompagnés</div>
+        <div class="org-type"><div class="org-dot"></div>Vous cherchez à enrichir votre programmation culturelle</div>
+        <div class="org-type"><div class="org-dot"></div>Votre public parle français et aspire à créer</div>
+        <div class="org-type"><div class="org-dot"></div>Vous opérez dans un pays francophone ou bilingue</div>
+      </div>
+      <a href="#sondage" class="hero-cta">Participer au sondage →</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Découvrir
+  </div>
+</section>
+
+<!-- ── POURQUOI ── -->
+<section class="why-section">
+  <div class="section-inner">
+    <p class="section-eyebrow">Sondage Littéraire</p>
+    <h2 class="section-title">Pourquoi ce sondage ?</h2>
+    <p class="section-sub">
+      Avant de déployer un programme de formation, nous voulons comprendre 
+      vos réalités, vos contraintes et les attentes de vos publics. 
+      Vos réponses construiront directement l'offre Lectulis.
+    </p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">🎯</span>
+        <h3>Co-construire l'offre</h3>
+        <p>Chaque réponse influence directement le programme que nous développons. Ce n'est pas un sondage de façade — vos retours façonnent l'offre réelle.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🌍</span>
+        <h3>Un besoin mondial</h3>
+        <p>Des milliers d'auteurs francophones hors de France cherchent un accompagnement littéraire en langue française. Vos membres en font-ils partie ?</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🤝</span>
+        <h3>Un partenariat concret</h3>
+        <p>Les structures qui participent à ce sondage seront prioritaires pour les ateliers pilotes gratuits et la co-animation du programme.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VALEUR ── -->
+<section class="value-section">
+  <div class="section-inner">
+    <div class="value-grid">
+      <div class="value-list">
+        <p class="section-eyebrow">Ce que vous obtenez</p>
+        <h2 class="section-title">Un programme clé en main pour vos membres</h2>
+        <p class="section-sub" style="margin-bottom: 28px;">Lectulis apporte tout — vous apportez votre public et votre légitimité.</p>
+
+        <div class="value-item">
+          <div class="value-num">01</div>
+          <div>
+            <h4>Ateliers en visioconférence</h4>
+            <p>Accessibles depuis n'importe quelle antenne ou domicile. Format 90 minutes avec formateur certifié.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">02</div>
+          <div>
+            <h4>Programme co-brandé</h4>
+            <p>Votre logo + Lectulis sur tous les supports. Valorise votre offre culturelle sans travail supplémentaire.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">03</div>
+          <div>
+            <h4>Zéro coût en phase pilote</h4>
+            <p>Les 3 premiers ateliers sont entièrement gratuits pour vos membres. Aucun engagement financier requis.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-num">04</div>
+          <div>
+            <h4>Résultats du sondage offerts</h4>
+            <p>Tous les participants à ce sondage reçoivent les résultats du Sondage Littéraire Lectulis.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="value-visual">
+        <div class="visual-quote">"</div>
+        <p class="visual-text">Écrire ne devrait pas être une aventure solitaire. Lectulis connecte les auteurs à une communauté qui parle leur langage.</p>
+        <div class="visual-modules">
+          <div class="visual-mod"><div class="mod-dot"></div>Module 1 — De l'idée au manuscrit</div>
+          <div class="visual-mod"><div class="mod-dot"></div>Module 2 — Structurer son roman</div>
+          <div class="visual-mod"><div class="mod-dot"></div>Module 3 — Révision & bêta-lecture</div>
+          <div class="visual-mod"><div class="mod-dot"></div>Module 4 — Publier sur Amazon KDP</div>
+          <div class="visual-mod"><div class="mod-dot"></div>Module 5 — Promouvoir son livre</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROGRESS BAR ── -->
+<div class="progress-bar-wrap" id="progress-bar">
+  <span class="progress-label" id="prog-label">Sondage</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="prog-fill"></div>
+  </div>
+  <span class="progress-pct" id="prog-pct">0%</span>
+</div>
+
+<!-- ── SONDAGE ── -->
+<section class="form-section" id="sondage">
+  <div class="section-inner">
+
+    <div class="form-sidebar">
+      <div class="sidebar-badge">Sondage Littéraire</div>
+      <h2>Sondage<br><em>Littéraire</em></h2>
+      <p>Vos réponses sont confidentielles et utilisées uniquement pour construire le programme Lectulis. Nous vous enverrons les résultats du sondage.</p>
+      <div class="sidebar-meta">
+        <div class="sidebar-meta-item">
+          <span>⏱</span><span>Environ 8 minutes</span>
+        </div>
+        <div class="sidebar-meta-item">
+          <span>🔒</span><span>Données protégées RGPD</span>
+        </div>
+        <div class="sidebar-meta-item">
+          <span>📊</span><span>Résultats du sondage partagés</span>
+        </div>
+        <div class="sidebar-meta-item">
+          <span>🎁</span><span>Accès prioritaire aux pilotes</span>
+        </div>
+        <div class="sidebar-meta-item">
+          <span>📧</span><span>Réponse sous 5 jours ouvrés</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="form-container">
+    <form class="form-card" id="sondage-form" action="https://formspree.io/f/mqenqjdn" method="POST">
+
+      <!-- BLOC 1 — VOTRE ORGANISME -->
+      <div class="form-block">
+        <div class="block-header">
+          <div class="block-num">1</div>
+          <div>
+            <div class="block-title">Votre structure</div>
+            <div class="block-sub">Informations générales sur votre structure</div>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Nom de votre structure <span class="q-req">*</span></div>
+          <input type="text" name="organisme" placeholder="Ex : Centre culturel de Port-Louis" required>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Type de structure <span class="q-req">*</span></div>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="type_organisme" value="Institut ou centre culturel francophone" required><span class="opt-label"><span class="opt-box"></span>🏛️ Institut ou centre culturel francophone</span></label>
+            <label class="opt"><input type="radio" name="type_organisme" value="Bibliothèque ou médiathèque"><span class="opt-label"><span class="opt-box"></span>📚 Bibliothèque ou médiathèque</span></label>
+            <label class="opt"><input type="radio" name="type_organisme" value="Association littéraire ou club de lecture"><span class="opt-label"><span class="opt-box"></span>✍️ Association littéraire ou club de lecture</span></label>
+            <label class="opt"><input type="radio" name="type_organisme" value="École de langues ou centre de formation"><span class="opt-label"><span class="opt-box"></span>🌍 École de langues ou centre de formation/span></label>
+            <label class="opt"><input type="radio" name="type_organisme" value="Établissement d'enseignement supérieur"><span class="opt-label"><span class="opt-box"></span>🎓 Établissement d'enseignement supérieur/span></label>
+            <label class="opt"><input type="radio" name="type_organisme" value="Structure éditoriale ou comité de lecture"><span class="opt-label"><span class="opt-box"></span>📖 Structure éditoriale ou comité de lecture/span></label>
+            <label class="opt"><input type="radio" name="type_organisme" value="Autre organisme culturel ou associatif"><span class="opt-label"><span class="opt-box"></span>💼 Autre organisme culturel ou associatif/span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Pays et ville <span class="q-req">*</span></div>
+          <div class="input-row">
+            <input type="text" name="pays" placeholder="Pays" required>
+            <input type="text" name="ville" placeholder="Ville">
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Taille approximative de votre communauté <span class="q-req">*</span></div>
+          <div class="opts-grid">
+            <label class="opt"><input type="radio" name="taille" value="Moins de 100 membres" required><span class="opt-label"><span class="opt-box"></span>< 100 membres</span></label>
+            <label class="opt"><input type="radio" name="taille" value="100 à 500 membres"><span class="opt-label"><span class="opt-box"></span>100 – 500</span></label>
+            <label class="opt"><input type="radio" name="type_organisme" value="500 à 2000 membres"><span class="opt-label"><span class="opt-box"></span>500 – 2 000</span></label>
+            <label class="opt"><input type="radio" name="taille" value="Plus de 2000 membres"><span class="opt-label"><span class="opt-box"></span>> 2 000</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOC 2 — VOTRE INTERLOCUTEUR -->
+      <div class="form-block">
+        <div class="block-header">
+          <div class="block-num">2</div>
+          <div>
+            <div class="block-title">Votre interlocuteur</div>
+            <div class="block-sub">La personne qui répond à cette étude</div>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Prénom, Nom <span class="q-req">*</span></div>
+          <div class="input-row">
+            <input type="text" name="prenom" placeholder="Prénom" required>
+            <input type="text" name="nom" placeholder="Nom" required>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Votre fonction <span class="q-req">*</span></div>
+          <select name="fonction" required>
+            <option value="" disabled selected>Sélectionnez votre fonction</option>
+            <option>Directeur / Directrice</option>
+            <option>Responsable culturel(le)</option>
+            <option>Responsable des programmes</option>
+            <option>Coordinateur / Coordinatrice</option>
+            <option>Chargé(e) de mission</option>
+            <option>Président(e) d'association</option>
+            <option>Autre fonction</option>
+          </select>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Adresse email professionnelle <span class="q-req">*</span></div>
+          <input type="email" name="email" placeholder="prenom.nom@organisme.org" required>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Site web de votre structure</div>
+          <input type="url" name="site_web" placeholder="https://...">
+        </div>
+      </div>
+
+      <!-- BLOC 3 — BESOINS ACTUELS -->
+      <div class="form-block">
+        <div class="block-header">
+          <div class="block-num">3</div>
+          <div>
+            <div class="block-title">Besoins & Offre actuelle</div>
+            <div class="block-sub">Ce que vous proposez et ce qui manque</div>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Proposez-vous déjà des activités littéraires ou d'écriture ? <span class="q-req">*</span></div>
+          <div class="opts-grid3">
+            <label class="opt"><input type="radio" name="activites_existantes" value="Oui, régulièrement" required><span class="opt-label"><span class="opt-box"></span>Oui, régulièrement</span></label>
+            <label class="opt"><input type="radio" name="activites_existantes" value="Oui, ponctuellement"><span class="opt-label"><span class="opt-box"></span>Oui, ponctuellement</span></label>
+            <label class="opt"><input type="radio" name="activites_existantes" value="Non, pas encore"><span class="opt-label"><span class="opt-box"></span>Non, pas encore</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Si oui, lesquelles ? <span class="q-hint" style="display:inline">(cochez tout ce qui s'applique)</span></div>
+          <div class="opts">
+            <label class="opt"><input type="checkbox" name="activites" value="Ateliers d'écriture créative"><span class="opt-label"><span class="opt-box"></span>Ateliers d'écriture créative</span></label>
+            <label class="opt"><input type="checkbox" name="activites" value="Clubs de lecture / cercles littéraires"><span class="opt-label"><span class="opt-box"></span>Clubs de lecture / cercles littéraires</span></label>
+            <label class="opt"><input type="checkbox" name="activites" value="Rencontres avec des auteurs"><span class="opt-label"><span class="opt-box"></span>Rencontres avec des auteurs</span></label>
+            <label class="opt"><input type="checkbox" name="activites" value="Concours / Prix littéraires"><span class="opt-label"><span class="opt-box"></span>Concours / Prix littéraires</span></label>
+            <label class="opt"><input type="checkbox" name="activites" value="Formations à l'édition / publication"><span class="opt-label"><span class="opt-box"></span>Formations à l'édition / publication</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Quel est le principal frein à proposer plus d'activités littéraires ? <span class="q-req">*</span></div>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="frein" value="Manque de formateurs qualifiés" required><span class="opt-label"><span class="opt-box"></span>Manque de formateurs qualifiés disponibles localement</span></label>
+            <label class="opt"><input type="radio" name="frein" value="Contraintes budgétaires"><span class="opt-label"><span class="opt-box"></span>Contraintes budgétaires</span></label>
+            <label class="opt"><input type="radio" name="frein" value="Manque de temps ou de ressources humaines"><span class="opt-label"><span class="opt-box"></span>Manque de temps ou de ressources humaines</span></label>
+            <label class="opt"><input type="radio" name="frein" value="Pas de demande identifiée"><span class="opt-label"><span class="opt-box"></span>Pas de demande identifiée chez nos membres</span></label>
+            <label class="opt"><input type="radio" name="frein" value="Difficulté à proposer du contenu en ligne"><span class="opt-label"><span class="opt-box"></span>Difficulté à proposer du contenu en ligne / visioconférence</span></label>
+            <label class="opt"><input type="radio" name="frein" value="Aucun frein particulier"><span class="opt-label"><span class="opt-box"></span>Aucun frein particulier</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOC 4 — INTÉRÊT POUR LECTULIS -->
+      <div class="form-block">
+        <div class="block-header">
+          <div class="block-num">4</div>
+          <div>
+            <div class="block-title">Intérêt pour le programme Lectulis</div>
+            <div class="block-sub">Évaluation de la pertinence pour votre public</div>
+          </div>
+        </div>
+
+        <div class="ibox gold">
+          <strong>Rappel :</strong> Lectulis propose des ateliers de formation littéraire en visioconférence 
+          (90 min, formateurs certifiés, 5 modules disponibles), en co-branding avec votre structure, 
+          gratuits en phase pilote.
+        </div>
+
+        <div class="question">
+          <div class="q-label">Pensez-vous que vos membres auraient de l'intérêt pour ce type d'atelier ? <span class="q-req">*</span></div>
+          <div class="q-hint">1 = très peu probable · 5 = très probable</div>
+          <div class="scale-row">
+            <label class="sc"><input type="radio" name="interet_membres" value="1" required><span class="sc-num">1</span></label>
+            <label class="sc"><input type="radio" name="interet_membres" value="2"><span class="sc-num">2</span></label>
+            <label class="sc"><input type="radio" name="interet_membres" value="3"><span class="sc-num">3</span></label>
+            <label class="sc"><input type="radio" name="interet_membres" value="4"><span class="sc-num">4</span></label>
+            <label class="sc"><input type="radio" name="interet_membres" value="5"><span class="sc-num">5</span></label>
+          </div>
+          <div class="scale-lbs"><span>Très peu probable</span><span>Très probable</span></div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Quel(s) module(s) vous semblent les plus pertinents pour votre public ? <span class="q-req">*</span></div>
+          <div class="opts">
+            <label class="opt"><input type="checkbox" name="modules_interet" value="Module 1 — De l'idée au manuscrit"><span class="opt-label"><span class="opt-box"></span>💡 Module 1 — De l'idée au manuscrit (les 5 piliers narratifs)</span></label>
+            <label class="opt"><input type="checkbox" name="modules_interet" value="Module 2 — Structurer son roman"><span class="opt-label"><span class="opt-box"></span>🏗️ Module 2 — Structurer et finir son roman</span></label>
+            <label class="opt"><input type="checkbox" name="modules_interet" value="Module 3 — Révision et bêta-lecture"><span class="opt-label"><span class="opt-box"></span>✏️ Module 3 — Réécriture et révision avec bêta-lecteurs</span></label>
+            <label class="opt"><input type="checkbox" name="modules_interet" value="Module 4 — Publier sur Amazon KDP"><span class="opt-label"><span class="opt-box"></span>📦 Module 4 — Publier sur Amazon KDP</span></label>
+            <label class="opt"><input type="checkbox" name="modules_interet" value="Module 5 — Promouvoir son livre"><span class="opt-label"><span class="opt-box"></span>📣 Module 5 — Promouvoir son livre et construire son audience</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Combien de participants pourriez-vous mobiliser pour un premier atelier ? <span class="q-req">*</span></div>
+          <div class="opts-grid">
+            <label class="opt"><input type="radio" name="nb_participants" value="Moins de 10" required><span class="opt-label"><span class="opt-box"></span>Moins de 10</span></label>
+            <label class="opt"><input type="radio" name="nb_participants" value="10 à 25"><span class="opt-label"><span class="opt-box"></span>10 à 25</span></label>
+            <label class="opt"><input type="radio" name="nb_participants" value="25 à 50"><span class="opt-label"><span class="opt-box"></span>25 à 50</span></label>
+            <label class="opt"><input type="radio" name="nb_participants" value="Plus de 50"><span class="opt-label"><span class="opt-box"></span>Plus de 50</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Quel format préférez-vous pour les ateliers ? <span class="q-req">*</span></div>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="format" value="100% en ligne (visioconférence)" required><span class="opt-label"><span class="opt-box"></span>💻 100% en ligne (visioconférence Zoom)</span></label>
+            <label class="opt"><input type="radio" name="format" value="Hybride (présentiel + visio)"><span class="opt-label"><span class="opt-box"></span>🔀 Hybride (certains présents, d'autres en visio)</span></label>
+            <label class="opt"><input type="radio" name="format" value="Présentiel uniquement"><span class="opt-label"><span class="opt-box"></span>🏢 Présentiel uniquement dans nos locaux</span></label>
+            <label class="opt"><input type="radio" name="format" value="Indifférent"><span class="opt-label"><span class="opt-box"></span>↔️ Indifférent selon le contenu</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOC 5 — PARTENARIAT -->
+      <div class="form-block">
+        <div class="block-header">
+          <div class="block-num">5</div>
+          <div>
+            <div class="block-title">Vision du partenariat</div>
+            <div class="block-sub">Conditions et attentes d'une collaboration</div>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Qu'est-ce qui vous rendrait ce partenariat particulièrement attractif ? <span class="q-req">*</span></div>
+          <div class="opts">
+            <label class="opt"><input type="checkbox" name="attractivite" value="Ateliers gratuits pour nos membres"><span class="opt-label"><span class="opt-box"></span>🎁 Des ateliers 100% gratuits pour nos membres</span></label>
+            <label class="opt"><input type="checkbox" name="attractivite" value="Co-branding sur tous les supports"><span class="opt-label"><span class="opt-box"></span>🏷️ Le co-branding (notre logo + Lectulis) sur tous les supports</span></label>
+            <label class="opt"><input type="checkbox" name="attractivite" value="Formateurs certifiés et sélectionnés"><span class="opt-label"><span class="opt-box"></span>🎓 Des formateurs certifiés et rigoureusement sélectionnés</span></label>
+            <label class="opt"><input type="checkbox" name="attractivite" value="Zéro gestion administrative pour nous"><span class="opt-label"><span class="opt-box"></span>⚙️ Zéro gestion administrative de notre côté</span></label>
+            <label class="opt"><input type="checkbox" name="attractivite" value="Partage de revenus à terme"><span class="opt-label"><span class="opt-box"></span>💰 Un partage de revenus à terme sur les ateliers payants</span></label>
+            <label class="opt"><input type="checkbox" name="attractivite" value="Rapport de satisfaction participants"><span class="opt-label"><span class="opt-box"></span>📊 Un rapport de satisfaction des participants après chaque session</span></label>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Y a-t-il des conditions sine qua non pour que votre structure s'engage ? <span class="q-req">*</span></div>
+          <textarea name="conditions" placeholder="Ex : validation par notre conseil d'administration, accord du siège national, budget dédié, langue des ateliers, etc." style="min-height: 100px;" required></textarea>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Évaluez votre intérêt global pour ce partenariat <span class="q-req">*</span></div>
+          <div class="q-hint">1 = pas du tout intéressé · 5 = très fortement intéressé</div>
+          <div class="scale-row">
+            <label class="sc"><input type="radio" name="interet_global" value="1" required><span class="sc-num">1</span></label>
+            <label class="sc"><input type="radio" name="interet_global" value="2"><span class="sc-num">2</span></label>
+            <label class="sc"><input type="radio" name="interet_global" value="3"><span class="sc-num">3</span></label>
+            <label class="sc"><input type="radio" name="interet_global" value="4"><span class="sc-num">4</span></label>
+            <label class="sc"><input type="radio" name="interet_global" value="5"><span class="sc-num">5</span></label>
+          </div>
+          <div class="scale-lbs"><span>Pas intéressé</span><span>Très fortement intéressé</span></div>
+        </div>
+      </div>
+
+      <!-- BLOC 6 — FIN -->
+      <div class="form-block">
+        <div class="block-header">
+          <div class="block-num">6</div>
+          <div>
+            <div class="block-title">Pour finir</div>
+            <div class="block-sub">Vos commentaires et la suite</div>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Avez-vous des questions ou des remarques pour l'équipe Lectulis ?</div>
+          <textarea name="commentaires" placeholder="Toute question, suggestion ou information complémentaire est la bienvenue…"></textarea>
+        </div>
+
+        <div class="question">
+          <div class="q-label">Souhaitez-vous être recontacté(e) pour approfondir la discussion ? <span class="q-req">*</span></div>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="recontact" value="Oui, je souhaite un appel de découverte" required><span class="opt-label"><span class="opt-box"></span>📞 Oui, je souhaite un appel de découverte de 30 minutes</span></label>
+            <label class="opt"><input type="radio" name="recontact" value="Oui, par email uniquement"><span class="opt-label"><span class="opt-box"></span>📧 Oui, par email uniquement</span></label>
+            <label class="opt"><input type="radio" name="recontact" value="Oui, recevoir le rapport de l'étude"><span class="opt-label"><span class="opt-box"></span>📊 Oui, je veux recevoir le résultats du Sondage Littéraire</span></label>
+            <label class="opt"><input type="radio" name="recontact" value="Non merci"><span class="opt-label"><span class="opt-box"></span>🔒 Non merci, participation anonyme</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="form-submit">
+        <h3>Merci pour votre participation</h3>
+        <p>Votre réponse sera traitée sous 5 jours ouvrés.<br>Vous recevrez les résultats du Sondage Littéraire Lectulis.</p>
+        <button type="submit" class="btn-submit" id="submit-btn">
+          Envoyer mes réponses →
+        </button>
+        <div class="trust-row">
+          <span class="trust-item">🔒 RGPD</span>
+          <span class="trust-item">📧 Sans spam</span>
+          <span class="trust-item">📊 Résultats offerts</span>
+          <span class="trust-item">🤝 Sans engagement</span>
+        </div>
+      </div>
+
+    </form>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">🎉</div>
+      <h2>Merci pour votre participation !</h2>
+      <p>Vos réponses ont bien été enregistrées. Nous vous enverrons les <strong>résultats complets du Sondage Littéraire</strong> dès leur publication.</p>
+      <p style="margin-top: 12px;">En attendant, découvrez notre programme sur :</p>
+      <p style="margin-top: 8px;"><a href="https://atelier.lectulis.fr" target="_blank" style="color:var(--accent);font-weight:600;text-decoration:none;">atelier.lectulis.fr →</a></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">Lectulis<span>.</span>fr</div>
+  <p class="footer-copy">© 2026 Lectulis — Sondage Littéraire</p>
+  <p class="footer-copy">contact@lectulis.fr</p>
+</footer>
+
+<script>
+  // Progress bar
+  function updateProgress() {
+    const required = document.querySelectorAll('[required]');
+    const filled = new Set();
+    required.forEach(el => {
+      if (el.type === 'radio' || el.type === 'checkbox') {
+        if (el.checked) filled.add(el.name);
+      } else {
+        if (el.value.trim()) filled.add(el.name);
+      }
+    });
+    const groups = new Set([...required].map(el => el.name));
+    const total = groups.size;
+    const done = filled.size;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-pct').textContent = pct + '%';
+    const labels = ['Sondage', 'En cours…', 'Bonne progression !', 'Presque fini !', '✓ Complet'];
+    const idx = pct === 0 ? 0 : pct < 30 ? 1 : pct < 70 ? 2 : pct < 100 ? 3 : 4;
+    document.getElementById('prog-label').textContent = labels[idx];
+  }
+
+  const form = document.getElementById('sondage-form');
+  form.addEventListener('change', updateProgress);
+  form.addEventListener('input', updateProgress);
+  updateProgress();
+
+  // Submit
+  const submitBtn = document.getElementById('submit-btn');
+  const successScreen = document.getElementById('success-screen');
+  const formContainer = document.getElementById('form-container');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    submitBtn.textContent = 'Envoi en cours…';
+    submitBtn.disabled = true;
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        formContainer.style.display = 'none';
+        successScreen.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert('Une erreur est survenue. Veuillez réessayer.');
+        submitBtn.textContent = 'Envoyer mes réponses →';
+        submitBtn.disabled = false;
+      }
+    } catch {
+      alert('Erreur réseau. Veuillez réessayer.');
+      submitBtn.textContent = 'Envoyer mes réponses →';
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
